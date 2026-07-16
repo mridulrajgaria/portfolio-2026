@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent-amber: #ffb703;
+  --color-accent-red: #fb8500;
+  --color-accent-green: #06d6a0;
+  --color-accent-blue: #0077b6;
+
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+:root {
+  --background: #080808;
+  --foreground: #ffffff;
+  --muted: #888888;
+}
+
+[data-theme='cyberpunk'] {
+  --background: #090014;
+  --foreground: #00ffcc;
+  --muted: #ff00ea;
+}
+
+[data-theme='brutalist'] {
+  --background: #ffffff;
+  --foreground: #000000;
+  --muted: #666666;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  overscroll-behavior: none;
+}
+
+/* Hide scrollbar for cleaner look */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #080808; 
+}
+::-webkit-scrollbar-thumb {
+  background: #222; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #444; 
+}
+
+/* Typography styles for ease of use */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
