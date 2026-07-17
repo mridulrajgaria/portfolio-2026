@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
@@ -42,13 +42,13 @@ export default function Navbar() {
       }`}
     >
       <div
-        className={`flex items-center gap-2 md:gap-8 px-6 py-3 rounded-full transition-all duration-500 border ${
+        className={`flex items-center gap-2 md:gap-8 px-4 md:px-6 py-2 md:py-3 rounded-full transition-all duration-500 border ${
           scrolled 
             ? "bg-[var(--background)]/50 backdrop-blur-xl border-[var(--foreground)]/10 shadow-2xl" 
             : "bg-transparent border-transparent"
         }`}
       >
-        <ul className="flex items-center gap-4 md:gap-8">
+        <ul className="hidden md:flex items-center gap-4 md:gap-8">
           {navLinks.map((link) => (
             <li key={link.name}>
               <Magnetic>
@@ -74,10 +74,13 @@ export default function Navbar() {
         {/* Visual Hint / Trigger Button */}
         <button
           onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
-          className="ml-4 md:ml-8 flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--foreground)]/5 border border-[var(--foreground)]/10 hover:bg-[var(--foreground)]/10 transition-colors group cursor-none"
+          className="md:ml-4 flex items-center gap-2 px-4 py-2 md:px-3 md:py-1.5 rounded-full bg-[var(--foreground)]/5 border border-[var(--foreground)]/10 hover:bg-[var(--foreground)]/10 transition-colors group cursor-none"
         >
-          <Search className="w-3 h-3 text-[var(--foreground)]/50 group-hover:text-[var(--foreground)] transition-colors" />
-          <span className="font-mono text-xs text-[var(--foreground)]/50 group-hover:text-[var(--foreground)] transition-colors">{osKey}</span>
+          <Search className="w-4 h-4 md:w-3 md:h-3 text-[var(--foreground)]/50 group-hover:text-[var(--foreground)] transition-colors" />
+          <span className="font-mono text-sm md:text-xs text-[var(--foreground)]/80 md:text-[var(--foreground)]/50 group-hover:text-[var(--foreground)] transition-colors">
+            <span className="md:hidden">MENU</span>
+            <span className="hidden md:inline">{osKey}</span>
+          </span>
         </button>
       </div>
     </motion.header>
