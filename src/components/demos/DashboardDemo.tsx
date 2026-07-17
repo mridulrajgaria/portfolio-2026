@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { motion, useSpring, useTransform, MotionValue } from "framer-motion";
 import { Activity, Users, DollarSign } from "lucide-react";
 
@@ -63,9 +63,8 @@ export default function DashboardDemo({
             {[40, 70, 45, 90, 65, 85, 100].map((h, i) => (
               <motion.div 
                 key={i} 
-                initial={{ height: "10%" }}
-                animate={{ height: isHovering ? `${h}%` : "10%" }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
+                animate={{ height: ["10%", `${h}%`, `${h}%`, "10%"] }}
+                transition={{ duration: 4, repeat: Infinity, delay: i * 0.1, times: [0, 0.4, 0.8, 1], ease: "easeInOut" }}
                 className="flex-1 bg-gradient-to-t from-[#0077b6]/20 to-[#0077b6]/80 rounded-t-sm"
               />
             ))}

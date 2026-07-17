@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -11,27 +11,21 @@ export default function ContributionDemo({ isHovering }: { isHovering: boolean }
   const [activeCells, setActiveCells] = useState<Set<number>>(new Set());
 
   useEffect(() => {
-    if (isHovering) {
-      const interval = setInterval(() => {
-        setActiveCells(prev => {
-          const next = new Set(prev);
-          // Add 3 random cells
-          for (let i = 0; i < 3; i++) {
-            next.add(Math.floor(Math.random() * totalCells));
-          }
-          // Remove 1 random cell to keep it dynamic
-          if (next.size > 0) {
-            const items = Array.from(next);
-            next.delete(items[Math.floor(Math.random() * items.length)]);
-          }
-          return next;
-        });
-      }, 100);
-      return () => clearInterval(interval);
-    } else {
-      setActiveCells(new Set());
-    }
-  }, [isHovering, totalCells]);
+    const interval = setInterval(() => {
+      setActiveCells(prev => {
+        const next = new Set(prev);
+        for (let i = 0; i < 3; i++) {
+          next.add(Math.floor(Math.random() * totalCells));
+        }
+        if (next.size > 0) {
+          const items = Array.from(next);
+          next.delete(items[Math.floor(Math.random() * items.length)]);
+        }
+        return next;
+      });
+    }, 150);
+    return () => clearInterval(interval);
+  }, [totalCells]);
 
   return (
     <div className="p-6 bg-[#050f0c] border border-[#06d6a0]/20 rounded-xl shadow-[0_0_50px_rgba(6,214,160,0.05)]">

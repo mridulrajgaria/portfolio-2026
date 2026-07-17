@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -16,21 +16,18 @@ export default function TerminalDemo({ isHovering }: { isHovering: boolean }) {
   const [visibleLogs, setVisibleLogs] = useState<number>(0);
 
   useEffect(() => {
-    if (isHovering) {
-      let current = 0;
-      const interval = setInterval(() => {
-        if (current < logs.length) {
-          current++;
-          setVisibleLogs(current);
-        } else {
-          clearInterval(interval);
-        }
-      }, 300);
-      return () => clearInterval(interval);
-    } else {
-      setVisibleLogs(0);
-    }
-  }, [isHovering]);
+    let current = 0;
+    const interval = setInterval(() => {
+      current++;
+      if (current <= logs.length) {
+        setVisibleLogs(current);
+      } else if (current > logs.length + 4) {
+        current = 0;
+        setVisibleLogs(0);
+      }
+    }, 400);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="w-full max-w-sm h-64 bg-[#050505] border border-[var(--foreground)]/10 rounded-xl p-4 font-mono text-xs overflow-hidden flex flex-col justify-start relative shadow-2xl">
@@ -55,7 +52,7 @@ export default function TerminalDemo({ isHovering }: { isHovering: boolean }) {
               <span className="text-[var(--foreground)]/40 mr-2">{'>'}</span> {log}
             </motion.div>
           ))}
-          {isHovering && visibleLogs < logs.length && (
+          {visibleLogs < logs.length && (
             <motion.div
               animate={{ opacity: [1, 0, 1] }}
               transition={{ repeat: Infinity, duration: 0.8 }}

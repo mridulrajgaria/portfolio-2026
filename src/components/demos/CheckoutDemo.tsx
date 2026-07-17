@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ShieldCheck } from "lucide-react";
@@ -7,21 +7,18 @@ export default function CheckoutDemo({ isHovering }: { isHovering: boolean }) {
   const [checked, setChecked] = useState(0);
   
   useEffect(() => {
-    if (isHovering) {
-      let current = 0;
-      const interval = setInterval(() => {
-        if (current < 3) {
-          current++;
-          setChecked(current);
-        } else {
-          clearInterval(interval);
-        }
-      }, 400);
-      return () => clearInterval(interval);
-    } else {
-      setChecked(0);
-    }
-  }, [isHovering]);
+    let current = 0;
+    const interval = setInterval(() => {
+      current++;
+      if (current <= 3) {
+        setChecked(current);
+      } else if (current > 6) {
+        current = 0;
+        setChecked(0);
+      }
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
 
   const items = [
     "End-to-End Encryption",
