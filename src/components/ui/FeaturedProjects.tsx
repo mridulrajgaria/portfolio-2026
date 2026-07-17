@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useMotionValue, useMotionTemplate } from "framer-motion";
+import { motion, useMotionValue, useMotionTemplate, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { GitBranch } from "lucide-react";
 import ScrambleText from "@/components/ui/ScrambleText";
@@ -62,6 +62,8 @@ const Card = ({ project, i }: { project: any, i: number }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const [isHovering, setIsHovering] = useState(false);
+  const isInView = useInView(containerRef, { margin: "-20% 0px -20% 0px" });
+  const isActive = isHovering || isInView;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -144,10 +146,10 @@ const Card = ({ project, i }: { project: any, i: number }) => {
 
         {/* Right Side: The Interactive Asset */}
         <div className="relative w-full aspect-square md:aspect-video lg:aspect-auto lg:h-full max-h-[300px] md:max-h-[450px] rounded-2xl overflow-hidden border border-[var(--foreground)]/10 bg-[var(--background)] shadow-2xl flex items-center justify-center group z-20 order-1 lg:order-2">
-          {i === 0 && <TerminalDemo isHovering={isHovering} />}
-          {i === 1 && <DashboardDemo mouseX={mouseX} mouseY={mouseY} isHovering={isHovering} />}
-          {i === 2 && <CheckoutDemo isHovering={isHovering} />}
-          {i === 3 && <ContributionDemo isHovering={isHovering} />}
+          {i === 0 && <TerminalDemo isHovering={isActive} />}
+          {i === 1 && <DashboardDemo mouseX={mouseX} mouseY={mouseY} isHovering={isActive} />}
+          {i === 2 && <CheckoutDemo isHovering={isActive} />}
+          {i === 3 && <ContributionDemo isHovering={isActive} />}
         </div>
       </motion.div>
     </div>
