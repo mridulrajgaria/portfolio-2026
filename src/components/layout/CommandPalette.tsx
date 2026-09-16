@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { Command } from "cmdk";
@@ -12,7 +12,7 @@ export default function CommandPalette() {
   const { setTheme } = useTheme();
   const { playHover, playClick } = useUISound();
 
-  // Toggle the menu when âŒ˜K is pressed
+  // Toggle the menu when ⌘K is pressed
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -45,18 +45,18 @@ export default function CommandPalette() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[100] bg-[var(--background)]/60 backdrop-blur-sm flex items-center justify-center p-4"
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed inset-0 z-[100] bg-[var(--background)]/70 backdrop-blur-md flex items-center justify-center p-4"
           onClick={() => setOpen(false)}
         >
           <motion.div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.95, opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            initial={{ scale: 0.95, opacity: 0, y: 10 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.96, opacity: 0, y: 8 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             onAnimationStart={() => playClick()}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-xl bg-[var(--background)] border border-[var(--muted)]/20 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+            className="w-full max-w-xl bg-[var(--background)] border border-[var(--foreground)]/15 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
           >
             <Command
               className="w-full h-full flex flex-col"

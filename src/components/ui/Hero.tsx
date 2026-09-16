@@ -17,18 +17,18 @@ const sentence = {
   visible: {
     opacity: 1,
     transition: {
-      delay: 0.2,
-      staggerChildren: 0.08,
+      delay: 0.15,
+      staggerChildren: 0.04,
     },
   },
 };
 
 const letter = {
-  hidden: { opacity: 0, y: 50 },
+  hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { ease: [0.16, 1, 0.3, 1] as any, duration: 1 },
+    transition: { ease: [0.16, 1, 0.3, 1] as any, duration: 0.85 },
   },
 };
 

@@ -1,13 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+
+  // Buttery-smooth spring physics for fluid interpolation without jitter
+  const springConfig = { damping: 28, stiffness: 400, mass: 0.2 };
+  const smoothX = useSpring(cursorX, springConfig);
+  const smoothY = useSpring(cursorY, springConfig);
 
   useEffect(() => {
     // Detect touch devices so we can disable the custom cursor
@@ -17,7 +24,8 @@ export default function CustomCursor() {
     }
 
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
     };
 
@@ -29,7 +37,8 @@ export default function CustomCursor() {
         target.tagName.toLowerCase() === "button" ||
         target.closest("a") ||
         target.closest("button") ||
-        target.closest("[data-hoverable='true']")
+        target.closest("[data-hoverable='true']") ||
+        target.closest("[role='button']")
       ) {
         setIsHovering(true);
       } else {
@@ -41,52 +50,36 @@ export default function CustomCursor() {
       setIsVisible(false);
     };
 
-    window.addEventListener("mousemove", updateMousePosition);
-    window.addEventListener("mouseover", handleMouseOver);
-    window.addEventListener("mouseout", handleMouseLeave);
+    window.addEventListener("mousemove", updateMousePosition, { passive: true });
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
+    window.addEventListener("mouseout", handleMouseLeave, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", updateMousePosition);
       window.removeEventListener("mouseover", handleMouseOver);
       window.removeEventListener("mouseout", handleMouseLeave);
     };
-  }, [isVisible]);
+  }, [isVisible, cursorX, cursorY]);
 
   if (isTouchDevice) return null;
 
-  const variants = {
-    default: {
-      x: mousePosition.x - 10,
-      y: mousePosition.y - 10,
-      width: 20,
-      height: 20,
-      backgroundColor: "var(--foreground)",
-      mixBlendMode: "difference" as const,
-    },
-    hover: {
-      x: mousePosition.x - 40,
-      y: mousePosition.y - 40,
-      width: 80,
-      height: 80,
-      backgroundColor: "var(--foreground)",
-      mixBlendMode: "difference" as const,
-    },
-  };
-
   return (
     <motion.div
-      className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999]"
-      variants={variants}
-      animate={isHovering ? "hover" : "default"}
-      initial="default"
-      transition={{
-        type: "spring",
-        stiffness: 150,
-        damping: 15,
-        mass: 0.1,
-      }}
+      className="fixed top-0 left-0 w-5 h-5 rounded-full pointer-events-none z-[9999] bg-[var(--foreground)]"
       style={{
+        x: smoothX,
+        y: smoothY,
+        translateX: "-50%",
+        translateY: "-50%",
+        mixBlendMode: "difference",
+      }}
+      animate={{
+        scale: isHovering ? 3.2 : 1,
         opacity: isVisible ? 1 : 0,
+      }}
+      transition={{
+        scale: { type: "spring", stiffness: 350, damping: 24, mass: 0.5 },
+        opacity: { duration: 0.25, ease: [0.16, 1, 0.3, 1] },
       }}
     />
   );

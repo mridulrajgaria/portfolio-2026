@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useRef, Suspense } from "react";
 import dynamic from "next/dynamic";
@@ -60,9 +60,9 @@ export default function ResearchSection() {
               Beyond building systems, I possess a deep academic curiosity into the inner workings of machine perception. How do algorithms interpret spatial features? How do we build structural resilience against adversarial inputs?
             </p>
             <p>
-              My published research dives into these exact questionsâ€”exploring the optimization of Transfer Learning pipelines using ResNet and Inception architectures.
+              My published research dives into these exact questions—exploring the optimization of Transfer Learning pipelines using ResNet and Inception architectures.
             </p>
-            <div className="mt-8 inline-flex items-center gap-3 border border-[var(--foreground)]/10 bg-[var(--foreground)]/[0.02] px-5 py-3 rounded-xl w-fit">
+            <div className="mt-8 inline-flex items-center gap-3 border border-[var(--foreground)]/10 bg-[var(--foreground)]/[0.02] hover:bg-[var(--foreground)]/[0.05] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] px-5 py-3 rounded-xl w-fit">
               <span className="w-2 h-2 rounded-full bg-[var(--foreground)]/50 animate-pulse" />
               <p className="text-[var(--foreground)] font-mono text-xs uppercase tracking-wider">
                 Published in the Journal of the Institution of Engineers (India), Sept 2024

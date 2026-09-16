@@ -29,17 +29,19 @@ export default function WorkExperience() {
           {experiences.map((exp) => (
             <div
               key={exp.id}
-              className="group relative border-b border-[var(--muted)]/20 py-12 md:py-20 transition-colors duration-700 hover:border-[var(--foreground)]/50"
+              className="group relative border-b border-[var(--muted)]/20 py-12 md:py-20 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[var(--foreground)]/50 cursor-pointer"
               onMouseEnter={() => setHoveredId(exp.id)}
               onMouseLeave={() => setHoveredId(null)}
+              onClick={() => setHoveredId(hoveredId === exp.id ? null : exp.id)}
               data-hoverable="true"
             >
-              <div className="flex flex-col md:flex-row md:items-center justify-between z-10 relative">
-                <h3 className="text-5xl md:text-7xl lg:text-[6rem] font-bold tracking-tighter text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors duration-700">
+              <div className="flex flex-col md:flex-row md:items-center justify-between z-10 relative transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2">
+                <h3 className="text-5xl md:text-7xl lg:text-[6rem] font-bold tracking-tighter text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
                   {exp.company}
                 </h3>
                 <div className="mt-6 md:mt-0 flex flex-col items-start md:items-end font-mono">
                   <span className="text-xl md:text-2xl text-[var(--foreground)]/90">{exp.role}</span>
+                  <span className="text-sm text-[var(--muted)] mt-1">{exp.date}</span>
                 </div>
               </div>
 
@@ -47,20 +49,20 @@ export default function WorkExperience() {
               <AnimatePresence>
                 {hoveredId === exp.id && (
                   <motion.div
-                    initial={{ opacity: 0, height: 0, clipPath: "inset(0 0 100% 0)" }}
+                    initial={{ opacity: 0, height: 0, y: -10 }}
                     animate={{
                       opacity: 1,
                       height: "auto",
-                      clipPath: "inset(0 0 0% 0)",
+                      y: 0,
                     }}
-                    exit={{ opacity: 0, height: 0, clipPath: "inset(0 0 100% 0)" }}
+                    exit={{ opacity: 0, height: 0, y: -10 }}
                     transition={{
-                      duration: 0.8,
+                      duration: 0.6,
                       ease: [0.16, 1, 0.3, 1],
                     }}
                     className="overflow-hidden mt-12"
                   >
-                    <div className="bg-[var(--foreground)]/[0.03] backdrop-blur-2xl border-t border-l border-[var(--foreground)]/10 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                    <div className="bg-[var(--foreground)]/[0.03] backdrop-blur-2xl border-t border-l border-[var(--foreground)]/10 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden transition-all duration-500">
                       {/* Inner ambient glow */}
                       <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--foreground)]/5 rounded-full blur-[80px] pointer-events-none" />
                       
@@ -70,12 +72,12 @@ export default function WorkExperience() {
                             {exp.story}
                           </p>
                         </div>
-                        <div className="relative w-full h-[300px] lg:h-auto min-h-[300px] rounded-2xl overflow-hidden border border-[var(--foreground)]/5 group bg-[var(--background)]">
+                        <div className="relative w-full h-[300px] lg:h-auto min-h-[300px] rounded-2xl overflow-hidden border border-[var(--foreground)]/5 group/img bg-[var(--background)]">
                           <Image
                             src="/infrastructure-abstract.jpg"
                             alt="Full-Stack Infrastructure Architecture"
                             fill
-                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                            className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/img:scale-105"
                             sizes="(max-width: 1024px) 100vw, 50vw"
                           />
                         </div>

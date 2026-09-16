@@ -15,18 +15,18 @@ const navLinks = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [osKey, setOsKey] = useState("âŒ˜K");
+  const [osKey, setOsKey] = useState("⌘K");
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     // Detect OS for command palette hint
     if (typeof navigator !== "undefined") {
       const isMac = navigator.userAgent.toLowerCase().includes("mac");
-      setOsKey(isMac ? "âŒ˜K" : "Ctrl K");
+      setOsKey(isMac ? "⌘K" : "Ctrl K");
     }
 
     return () => window.removeEventListener("scroll", handleScroll);
@@ -37,14 +37,14 @@ export default function Navbar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-6 px-6 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-6 px-6 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         scrolled ? "py-4" : ""
       }`}
     >
       <div
-        className={`flex items-center gap-2 md:gap-8 px-4 md:px-6 py-2 md:py-3 rounded-full transition-all duration-500 border ${
+        className={`flex items-center gap-2 md:gap-8 px-4 md:px-6 py-2 md:py-3 rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] border ${
           scrolled 
-            ? "bg-[var(--background)]/50 backdrop-blur-xl border-[var(--foreground)]/10 shadow-2xl" 
+            ? "bg-[var(--background)]/70 backdrop-blur-2xl border-[var(--foreground)]/10 shadow-2xl" 
             : "bg-transparent border-transparent"
         }`}
       >
@@ -61,10 +61,10 @@ export default function Navbar() {
                       behavior: "smooth",
                     });
                   }}
-                  className="relative group px-2 py-1 text-xs md:text-sm font-mono tracking-widest uppercase text-[var(--foreground)]/60 hover:text-[var(--foreground)] transition-colors duration-300"
+                  className="relative group px-2 py-1 text-xs md:text-sm font-mono tracking-widest uppercase text-[var(--foreground)]/60 hover:text-[var(--foreground)] transition-colors duration-400"
                 >
                   {link.name}
-                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-px bg-[var(--foreground)] group-hover:w-full transition-all duration-300 ease-out" />
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-px bg-[var(--foreground)] group-hover:w-full transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]" />
                 </a>
               </Magnetic>
             </li>
@@ -74,10 +74,10 @@ export default function Navbar() {
         {/* Visual Hint / Trigger Button */}
         <button
           onClick={() => window.dispatchEvent(new Event("open-command-palette"))}
-          className="md:ml-4 flex items-center gap-2 px-4 py-2 md:px-3 md:py-1.5 rounded-full bg-[var(--foreground)]/5 border border-[var(--foreground)]/10 hover:bg-[var(--foreground)]/10 transition-colors group cursor-none"
+          className="md:ml-4 flex items-center gap-2 px-4 py-2 md:px-3 md:py-1.5 rounded-full bg-[var(--foreground)]/5 border border-[var(--foreground)]/10 hover:bg-[var(--foreground)]/15 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group cursor-none"
         >
-          <Search className="w-4 h-4 md:w-3 md:h-3 text-[var(--foreground)]/50 group-hover:text-[var(--foreground)] transition-colors" />
-          <span className="font-mono text-sm md:text-xs text-[var(--foreground)]/80 md:text-[var(--foreground)]/50 group-hover:text-[var(--foreground)] transition-colors">
+          <Search className="w-4 h-4 md:w-3 md:h-3 text-[var(--foreground)]/50 group-hover:text-[var(--foreground)] transition-colors duration-300" />
+          <span className="font-mono text-sm md:text-xs text-[var(--foreground)]/80 md:text-[var(--foreground)]/50 group-hover:text-[var(--foreground)] transition-colors duration-300">
             <span className="md:hidden">MENU</span>
             <span className="hidden md:inline">{osKey}</span>
           </span>

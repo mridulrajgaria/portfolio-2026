@@ -51,7 +51,7 @@ export default function CheckoutDemo({ isHovering }: { isHovering: boolean }) {
       </div>
       
       <motion.button 
-        className={`w-full py-3 rounded-xl font-semibold text-sm transition-colors duration-500 flex items-center justify-center gap-2 ${checked === 3 ? 'bg-[var(--foreground)] text-[var(--background)]' : 'bg-[var(--foreground)]/5 text-[var(--foreground)]/30'}`}
+        className={`w-full py-3 rounded-xl font-semibold text-sm transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center gap-2 ${checked === 3 ? 'bg-[var(--foreground)] text-[var(--background)]' : 'bg-[var(--foreground)]/5 text-[var(--foreground)]/30'}`}
         whileHover={{ scale: checked === 3 ? 1.02 : 1 }}
         whileTap={{ scale: 0.98 }}
       >
@@ -59,16 +59,18 @@ export default function CheckoutDemo({ isHovering }: { isHovering: boolean }) {
         <AnimatePresence>
           {checked === 3 && (
             <motion.span 
-              initial={{ opacity: 0, x: -10 }}
+              initial={{ opacity: 0, x: -6 }}
               animate={{ opacity: 1, x: 0 }}
-              className="ml-1"
+              exit={{ opacity: 0, x: 6 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="ml-1 inline-flex items-center"
             >
               <motion.span 
-                animate={{ x: [0, 5, 0] }} 
-                transition={{ repeat: Infinity, duration: 1.5 }}
+                animate={{ x: [0, 4, 0] }} 
+                transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
                 className="inline-block"
               >
-                â†’
+                →
               </motion.span>
             </motion.span>
           )}

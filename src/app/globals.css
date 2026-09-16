@@ -37,6 +37,22 @@ body {
   font-family: var(--font-sans);
   overflow-x: hidden;
   overscroll-behavior: none;
+  transition: background-color 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth color transitions on all theme changes */
+*, *::before, *::after {
+  border-color: rgba(255, 255, 255, 0.1);
+  transition-property: border-color, background-color, color, fill, stroke, box-shadow;
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Preserve rapid responsiveness for transforms and motion values */
+[style*="transform"], [style*="rotate"], [style*="translate"] {
+  transition-property: border-color, background-color, color;
 }
 
 /* Hide scrollbar for cleaner look */
@@ -44,13 +60,14 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #080808; 
+  background: var(--background); 
 }
 ::-webkit-scrollbar-thumb {
-  background: #222; 
+  background: rgba(255, 255, 255, 0.15); 
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #444; 
+  background: rgba(255, 255, 255, 0.3); 
 }
 
 /* Typography styles for ease of use */

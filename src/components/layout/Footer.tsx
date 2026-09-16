@@ -43,10 +43,10 @@ export default function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       data-hoverable="true"
-                      className="group relative flex items-center gap-6 text-6xl md:text-7xl lg:text-[6rem] font-bold tracking-tighter text-[var(--muted)] hover:text-[var(--foreground)] transition-colors duration-500 w-max"
+                      className="group relative flex items-center gap-6 text-6xl md:text-7xl lg:text-[6rem] font-bold tracking-tighter text-[var(--muted)] hover:text-[var(--foreground)] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] w-max"
                     >
                       <span>{link.name}</span>
-                      <span className="relative w-12 h-2 bg-[var(--muted)] group-hover:w-32 group-hover:bg-[var(--foreground)] transition-all duration-500 ease-out mt-4" />
+                      <span className="relative w-12 h-2 bg-[var(--muted)] group-hover:w-32 group-hover:bg-[var(--foreground)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] mt-4 rounded-full" />
                     </a>
                   </Magnetic>
                 </li>

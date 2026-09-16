@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useMotionValue, useMotionTemplate, useInView } from "framer-motion";
+import { motion, useMotionValue, useSpring, useMotionTemplate, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { GitBranch } from "lucide-react";
 import ScrambleText from "@/components/ui/ScrambleText";
@@ -53,14 +53,57 @@ const projects = [
     glowColor: "rgba(6, 214, 160, 0.15)",
     github: "https://github.com/mridulrajgaria/habitflow",
   },
+  {
+    title: "Loan Data Copilot",
+    chapter: "Chapter V — Verification AI",
+    tags: ["LLM Integration", "Financial Constraints", "Automation"],
+    story: "An AI-driven copilot engineered to automate and verify complex loan datasets. By integrating LLM verification layers with strict financial constraints, this system accelerates underwriting workflows while guaranteeing zero data hallucinations in critical monetary transactions.",
+    bgClass: "bg-[var(--background)]",
+    accentClass: "text-[#ffb703]",
+    glowColor: "rgba(255, 183, 3, 0.15)",
+    github: "https://github.com/mridulrajgaria",
+  },
+  {
+    title: "RouteFlow",
+    chapter: "Chapter VI — Visualization",
+    tags: ["Trajectory Mapping", "Animated Transitions", "Performance"],
+    story: "A trajectory-aware visualization and routing engine designed to map and animate complex object movements. Built for high-performance data processing, RouteFlow translates raw positional streams into fluid, intuitive visual transitions.",
+    bgClass: "bg-[var(--background)]",
+    accentClass: "text-[#0077b6]",
+    glowColor: "rgba(0, 119, 182, 0.15)",
+    github: "https://github.com/mridulrajgaria",
+  },
+  {
+    title: "Fact Knowledge Layer",
+    chapter: "Chapter VII — Data Graph",
+    tags: ["PDF Extraction", "Knowledge Graph", "Reconciliation"],
+    story: "A sophisticated data pipeline built to extract, ground, and reconcile facts from unstructured PDFs. Utilizing LLMs for data ingestion and a custom relationship engine, it automatically flags contradictions and corroborations to build a trustworthy knowledge graph.",
+    bgClass: "bg-[var(--background)]",
+    accentClass: "text-[#06d6a0]",
+    glowColor: "rgba(6, 214, 160, 0.15)",
+    github: "https://github.com/mridulrajgaria",
+  },
+  {
+    title: "EMS Dashboard",
+    chapter: "Chapter VIII — Enterprise",
+    tags: ["Role-based Access", "Dashboarding", "Full-Stack Java"],
+    story: "A robust, full-stack enterprise dashboard tailored for human resource operations. It features secure JWT authentication, role-based access control, and intuitive Kanban workflows to streamline everything from onboarding to performance tracking.",
+    bgClass: "bg-[var(--background)]",
+    accentClass: "text-[var(--foreground)]",
+    glowColor: "rgba(255, 255, 255, 0.1)",
+    github: "https://github.com/mridulrajgaria",
+  }
 ];
 
 const Card = ({ project, i }: { project: any, i: number }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // GPU-accelerated pointer tracking
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  // GPU-accelerated pointer tracking with smooth spring damping
+  const rawMouseX = useMotionValue(0);
+  const rawMouseY = useMotionValue(0);
+  const mouseX = useSpring(rawMouseX, { stiffness: 250, damping: 25, mass: 0.1 });
+  const mouseY = useSpring(rawMouseY, { stiffness: 250, damping: 25, mass: 0.1 });
+
   const [isHovering, setIsHovering] = useState(false);
   const isInView = useInView(containerRef, { margin: "-20% 0px -20% 0px" });
   const isActive = isHovering || isInView;
@@ -68,8 +111,8 @@ const Card = ({ project, i }: { project: any, i: number }) => {
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    mouseX.set(e.clientX - rect.left);
-    mouseY.set(e.clientY - rect.top);
+    rawMouseX.set(e.clientX - rect.left);
+    rawMouseY.set(e.clientY - rect.top);
   };
 
   const background = useMotionTemplate`radial-gradient(800px circle at ${mouseX}px ${mouseY}px, ${project.glowColor}, transparent 40%)`;
@@ -85,13 +128,13 @@ const Card = ({ project, i }: { project: any, i: number }) => {
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         className={cn(
-          "relative grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center w-full max-w-6xl min-h-[70vh] rounded-[2.5rem] p-8 md:p-16 overflow-hidden border border-[var(--foreground)]/5 transition-colors duration-500 shadow-2xl will-change-transform",
+          "relative grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center w-full max-w-6xl min-h-[70vh] rounded-[2.5rem] p-8 md:p-16 overflow-hidden border border-[var(--foreground)]/10 hover:border-[var(--foreground)]/25 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-2xl will-change-transform",
           project.bgClass
         )}
       >
         {/* GPU-Accelerated Spotlight Gradient */}
         <motion.div 
-          className="absolute inset-0 pointer-events-none transition-opacity duration-500 z-10"
+          className="absolute inset-0 pointer-events-none transition-opacity duration-700 ease-out z-10"
           style={{
             opacity: isHovering ? 1 : 0,
             background,
@@ -100,7 +143,7 @@ const Card = ({ project, i }: { project: any, i: number }) => {
 
         {/* Ambient base glow (Optimized for GPU) */}
         <div 
-          className="absolute -bottom-32 -right-32 w-[500px] h-[500px] pointer-events-none z-0" 
+          className="absolute -bottom-32 -right-32 w-[500px] h-[500px] pointer-events-none z-0 transition-opacity duration-700" 
           style={{ 
             background: `radial-gradient(circle, ${project.glowColor.replace('0.15', '0.4').replace('0.1', '0.4')} 0%, transparent 70%)` 
           }} 
@@ -118,7 +161,7 @@ const Card = ({ project, i }: { project: any, i: number }) => {
               {project.tags.map((tag: string, idx: number) => (
                 <span
                   key={idx}
-                  className="px-4 py-2 rounded-full bg-[var(--foreground)]/[0.03] border border-[var(--foreground)]/10 text-[var(--foreground)]/80"
+                  className="px-4 py-2 rounded-full bg-[var(--foreground)]/[0.03] border border-[var(--foreground)]/10 text-[var(--foreground)]/80 hover:bg-[var(--foreground)]/10 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
                 >
                   {tag}
                 </span>
@@ -135,7 +178,7 @@ const Card = ({ project, i }: { project: any, i: number }) => {
                 href={project.github} 
                 target="_blank" 
                 rel="noreferrer" 
-                className="flex items-center gap-2 text-sm font-mono text-[var(--muted)] hover:text-[var(--foreground)] transition-colors pointer-events-auto w-fit border-b border-[var(--foreground)]/10 hover:border-[var(--foreground)]/50 pb-1"
+                className="flex items-center gap-2 text-sm font-mono text-[var(--muted)] hover:text-[var(--foreground)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto w-fit border-b border-[var(--foreground)]/10 hover:border-[var(--foreground)]/60 pb-1"
               >
                 <GitBranch className="w-4 h-4" />
                 View Repository
@@ -145,11 +188,15 @@ const Card = ({ project, i }: { project: any, i: number }) => {
         </div>
 
         {/* Right Side: The Interactive Asset */}
-        <div className="relative w-full aspect-square md:aspect-video lg:aspect-auto lg:h-full max-h-[300px] md:max-h-[450px] rounded-2xl overflow-hidden border border-[var(--foreground)]/10 bg-[var(--background)] shadow-2xl flex items-center justify-center group z-20 order-1 lg:order-2">
+        <div className="relative w-full aspect-square md:aspect-video lg:aspect-auto lg:h-full max-h-[300px] md:max-h-[450px] rounded-2xl overflow-hidden border border-[var(--foreground)]/10 bg-[var(--background)] shadow-2xl flex items-center justify-center group z-20 order-1 lg:order-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
           {i === 0 && <TerminalDemo isHovering={isActive} />}
           {i === 1 && <DashboardDemo mouseX={mouseX} mouseY={mouseY} isHovering={isActive} />}
           {i === 2 && <CheckoutDemo isHovering={isActive} />}
           {i === 3 && <ContributionDemo isHovering={isActive} />}
+          {i === 4 && <CheckoutDemo isHovering={isActive} />}
+          {i === 5 && <ContributionDemo isHovering={isActive} />}
+          {i === 6 && <TerminalDemo isHovering={isActive} />}
+          {i === 7 && <DashboardDemo mouseX={mouseX} mouseY={mouseY} isHovering={isActive} />}
         </div>
       </motion.div>
     </div>
