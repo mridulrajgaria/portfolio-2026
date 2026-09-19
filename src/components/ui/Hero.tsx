@@ -104,7 +104,7 @@ export default function Hero() {
           className="lg:col-span-5 relative w-full max-w-[420px] aspect-[4/5] mx-auto lg:ml-auto rounded-3xl overflow-hidden border border-[var(--foreground)]/10 bg-[var(--background)] group shadow-2xl"
         >
           <Image
-            src="/profile.jpg"
+            src="/portfolio-2026/profile.jpg"
             alt="Mridul Rajgaria"
             fill
             className="object-cover object-top w-full h-full transition-transform duration-700 group-hover:scale-105"

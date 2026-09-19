@@ -74,7 +74,7 @@ export default function WorkExperience() {
                         </div>
                         <div className="relative w-full h-[300px] lg:h-auto min-h-[300px] rounded-2xl overflow-hidden border border-[var(--foreground)]/5 group/img bg-[var(--background)]">
                           <Image
-                            src="/infrastructure-abstract.jpg"
+                            src="/portfolio-2026/infrastructure-abstract.jpg"
                             alt="Full-Stack Infrastructure Architecture"
                             fill
                             className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/img:scale-105"
