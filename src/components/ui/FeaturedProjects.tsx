@@ -11,11 +11,12 @@ import TerminalDemo from "@/components/demos/TerminalDemo";
 import DashboardDemo from "@/components/demos/DashboardDemo";
 import CheckoutDemo from "@/components/demos/CheckoutDemo";
 import ContributionDemo from "@/components/demos/ContributionDemo";
-
+import { VerificationDemo, RouteDemo, GraphDemo, EnterpriseDemo } from "@/components/demos/LightweightDemos";
 const projects = [
   {
     title: "LLM API Gateway",
     chapter: "Chapter I — The Entry Point",
+    demoId: "terminal",
     tags: ["Concurrency", "Resilience", "Token Bucket Architecture"],
     story: "Tackling the unpredictable nature of massive AI API requests required a study in architectural resilience. This wasn't just about limiting rates; it was an exploration into managing concurrency and protecting downstream systems from sudden load spikes. By separating burst traffic from daily quotas and backing the entire mechanism with atomic Redis counters, I crafted a bulletproof entry point that absorbed chaos without adding latency.",
     bgClass: "bg-[var(--background)]",
@@ -24,18 +25,9 @@ const projects = [
     github: "https://github.com/mridulrajgaria/LLM-API-Gateway-with-Token-Based-Rate-Limiting",
   },
   {
-    title: "BDA CRM Module",
-    chapter: "Chapter II — Human Workflows",
-    tags: ["Systems Engineering", "Data Visualization", "Role-based Flows"],
-    story: "Enterprise tools often suffer from bloated, rigid interfaces. This project was a study in transforming messy corporate manufacturing activities into smooth, visual experiences. By dissecting the daily habits of business development teams, I engineered a role-based ecosystem where complex data models were rendered into a clean, drag-and-drop Kanban flow—making the underlying data structure feel invisible and effortless to the end user.",
-    bgClass: "bg-[var(--background)]",
-    accentClass: "text-[#0077b6]",
-    glowColor: "rgba(0, 119, 182, 0.15)",
-    github: "https://github.com/mridulrajgaria/bda-crm-module",
-  },
-  {
     title: "ShopHub Engine",
-    chapter: "Chapter III — The Transaction",
+    chapter: "Chapter II — The Transaction",
+    demoId: "checkout",
     tags: ["State Management", "Defense-in-Depth", "Scalability"],
     story: "E-commerce is the ultimate test of seamless transaction architecture. Building this engine was driven by the intricate dance of securing user data through multi-layered defensive engineering while preserving a sub-200ms feeling of instant interaction. Every MongoDB aggregation pipeline was relentlessly optimized, and every Redux state slice was meticulously planned to ensure that the journey from cart to checkout felt utterly predictable and entirely secure.",
     bgClass: "bg-[var(--background)]",
@@ -44,18 +36,9 @@ const projects = [
     github: "https://github.com/mridulrajgaria/ShopHubStore",
   },
   {
-    title: "HabitFlow State",
-    chapter: "Chapter IV — Behavioral Data",
-    tags: ["Real-time Tracking", "Constraint Environments", "Minimalism"],
-    story: "A minimal, high-efficiency exploration into behavioral design and real-time state tracking. Under the hood, this application handles continuous user updates within precise constraint environments. It strips away the noise, focusing purely on high-performance data workflows that quietly map the consistency of human habits without getting in the way.",
-    bgClass: "bg-[var(--background)]",
-    accentClass: "text-[#06d6a0]",
-    glowColor: "rgba(6, 214, 160, 0.15)",
-    github: "https://github.com/mridulrajgaria/habitflow",
-  },
-  {
     title: "Loan Data Copilot",
-    chapter: "Chapter V — Verification AI",
+    chapter: "Chapter III — Verification AI",
+    demoId: "verification",
     tags: ["LLM Integration", "Financial Constraints", "Automation"],
     story: "An AI-driven copilot engineered to automate and verify complex loan datasets. By integrating LLM verification layers with strict financial constraints, this system accelerates underwriting workflows while guaranteeing zero data hallucinations in critical monetary transactions.",
     bgClass: "bg-[var(--background)]",
@@ -65,7 +48,8 @@ const projects = [
   },
   {
     title: "RouteFlow",
-    chapter: "Chapter VI — Visualization",
+    chapter: "Chapter IV — Visualization",
+    demoId: "route",
     tags: ["Trajectory Mapping", "Animated Transitions", "Performance"],
     story: "A trajectory-aware visualization and routing engine designed to map and animate complex object movements. Built for high-performance data processing, RouteFlow translates raw positional streams into fluid, intuitive visual transitions.",
     bgClass: "bg-[var(--background)]",
@@ -74,8 +58,20 @@ const projects = [
     github: "https://github.com/mridulrajgaria",
   },
   {
+    title: "EMS Dashboard",
+    chapter: "Chapter V — Enterprise",
+    demoId: "enterprise",
+    tags: ["Role-based Access", "Dashboarding", "Full-Stack Java"],
+    story: "A robust, full-stack enterprise dashboard tailored for human resource operations. It features secure JWT authentication, role-based access control, and intuitive Kanban workflows to streamline everything from onboarding to performance tracking.",
+    bgClass: "bg-[var(--background)]",
+    accentClass: "text-[var(--foreground)]",
+    glowColor: "rgba(255, 255, 255, 0.1)",
+    github: "https://github.com/mridulrajgaria",
+  },
+  {
     title: "Fact Knowledge Layer",
-    chapter: "Chapter VII — Data Graph",
+    chapter: "Chapter VI — Data Graph",
+    demoId: "graph",
     tags: ["PDF Extraction", "Knowledge Graph", "Reconciliation"],
     story: "A sophisticated data pipeline built to extract, ground, and reconcile facts from unstructured PDFs. Utilizing LLMs for data ingestion and a custom relationship engine, it automatically flags contradictions and corroborations to build a trustworthy knowledge graph.",
     bgClass: "bg-[var(--background)]",
@@ -84,14 +80,26 @@ const projects = [
     github: "https://github.com/mridulrajgaria",
   },
   {
-    title: "EMS Dashboard",
-    chapter: "Chapter VIII — Enterprise",
-    tags: ["Role-based Access", "Dashboarding", "Full-Stack Java"],
-    story: "A robust, full-stack enterprise dashboard tailored for human resource operations. It features secure JWT authentication, role-based access control, and intuitive Kanban workflows to streamline everything from onboarding to performance tracking.",
+    title: "BDA CRM Module",
+    chapter: "Chapter VII — Human Workflows",
+    demoId: "dashboard",
+    tags: ["Systems Engineering", "Data Visualization", "Role-based Flows"],
+    story: "Enterprise tools often suffer from bloated, rigid interfaces. This project was a study in transforming messy corporate manufacturing activities into smooth, visual experiences. By dissecting the daily habits of business development teams, I engineered a role-based ecosystem where complex data models were rendered into a clean, drag-and-drop Kanban flow—making the underlying data structure feel invisible and effortless to the end user.",
     bgClass: "bg-[var(--background)]",
-    accentClass: "text-[var(--foreground)]",
-    glowColor: "rgba(255, 255, 255, 0.1)",
-    github: "https://github.com/mridulrajgaria",
+    accentClass: "text-[#0077b6]",
+    glowColor: "rgba(0, 119, 182, 0.15)",
+    github: "https://github.com/mridulrajgaria/bda-crm-module",
+  },
+  {
+    title: "HabitFlow State",
+    chapter: "Chapter VIII — Behavioral Data",
+    demoId: "contribution",
+    tags: ["Real-time Tracking", "Constraint Environments", "Minimalism"],
+    story: "A minimal, high-efficiency exploration into behavioral design and real-time state tracking. Under the hood, this application handles continuous user updates within precise constraint environments. It strips away the noise, focusing purely on high-performance data workflows that quietly map the consistency of human habits without getting in the way.",
+    bgClass: "bg-[var(--background)]",
+    accentClass: "text-[#06d6a0]",
+    glowColor: "rgba(6, 214, 160, 0.15)",
+    github: "https://github.com/mridulrajgaria/habitflow",
   }
 ];
 
@@ -189,14 +197,14 @@ const Card = ({ project, i }: { project: any, i: number }) => {
 
         {/* Right Side: The Interactive Asset */}
         <div className="relative w-full aspect-square md:aspect-video lg:aspect-auto lg:h-full max-h-[300px] md:max-h-[450px] rounded-2xl overflow-hidden border border-[var(--foreground)]/10 bg-[var(--background)] shadow-2xl flex items-center justify-center group z-20 order-1 lg:order-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
-          {i === 0 && <TerminalDemo isHovering={isActive} />}
-          {i === 1 && <DashboardDemo mouseX={mouseX} mouseY={mouseY} isHovering={isActive} />}
-          {i === 2 && <CheckoutDemo isHovering={isActive} />}
-          {i === 3 && <ContributionDemo isHovering={isActive} />}
-          {i === 4 && <CheckoutDemo isHovering={isActive} />}
-          {i === 5 && <ContributionDemo isHovering={isActive} />}
-          {i === 6 && <TerminalDemo isHovering={isActive} />}
-          {i === 7 && <DashboardDemo mouseX={mouseX} mouseY={mouseY} isHovering={isActive} />}
+          {project.demoId === "terminal" && <TerminalDemo isHovering={isActive} />}
+          {project.demoId === "dashboard" && <DashboardDemo mouseX={mouseX} mouseY={mouseY} isHovering={isActive} />}
+          {project.demoId === "checkout" && <CheckoutDemo isHovering={isActive} />}
+          {project.demoId === "contribution" && <ContributionDemo isHovering={isActive} />}
+          {project.demoId === "verification" && <VerificationDemo />}
+          {project.demoId === "route" && <RouteDemo />}
+          {project.demoId === "graph" && <GraphDemo />}
+          {project.demoId === "enterprise" && <EnterpriseDemo />}
         </div>
       </motion.div>
     </div>
